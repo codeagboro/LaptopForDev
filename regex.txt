@@ -1,0 +1,14 @@
+The regular expression /^\d{11}$/ is a pattern that matches strings that consist of exactly 11 digits.
+
+Here's a breakdown of what each part of the regex means:
+
+/ and /: These are the delimiters that mark the beginning and end of the regex pattern.
+^: This is a special character that matches the beginning of a string.
+\d: This is a shorthand character class that matches any digit character (equivalent to [0-9]).
+{11}: This is a quantifier that specifies that the preceding pattern (in this case, \d) must occur exactly 11 times.
+$: This is another special character that matches the end of a string.
+So, when you put all of these pieces together, /^\d{11}$/ matches any string that starts with the beginning of the string, followed by exactly 11 digits, and ends with the end of the string. This pattern would match strings like "12345678901" or "00000000000", but it would not match strings like "123456789" (which has only 9 digits) or "123456789012" (which has 12 digits).
+
+
+
+
