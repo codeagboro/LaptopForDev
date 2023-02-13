@@ -5,14 +5,17 @@ const recipientsRecord = require("../laptop4dev.model/laptop4dev.module");
 exports.createRecipients = async (req, res) => {
     try {
     
-       const { firstName, lastName, emailAddress, phoneNumber} = req.body;
+       const { firstName, lastName, emailAddress, phoneNumber, reasonForLaptop} = req.body;
 
        // input validation for all fields
-       if(!(firstName && lastName && emailAddress && phoneNumber)){
+       if(!(firstName && lastName && emailAddress && phoneNumber && reasonForLaptop)){
         return res.status(401).json({
             message: "All fields are required"
         });
-    }
+        }
+
+        const reasonLength = await recipientsRecord.findOne({reasonForLaptop});
+
 
         // email and phone number validation
         const emailExists = await recipientsRecord.findOne({emailAddress});
@@ -24,6 +27,16 @@ exports.createRecipients = async (req, res) => {
             });
         }
 
+        const emailAddressRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const validateEmailAddress = (emailAddress) => {
+            return emailAddressRegex.test(emailAddress);
+        }
+
+        if (!validateEmailAddress(emailAddress)){
+            return res.status(401).json({
+                message: "Does not match email pattern"
+            })
+        }
         // phone number length validation
         const phoneNumberRegex = /^\d{11}$/; // regex for 11 digit US phone number
         // function to validate if the number is more than 11 or less than 11
@@ -39,7 +52,7 @@ exports.createRecipients = async (req, res) => {
        
         // create the recipients
         const addRecipients = await recipientsRecord.create({
-            firstName, lastName, emailAddress, phoneNumber
+            firstName, lastName, emailAddress, phoneNumber, reasonForLaptop
         });
         return res.status(201).json({
         message: "Recipient added successfully",

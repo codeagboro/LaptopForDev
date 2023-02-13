@@ -14,6 +14,9 @@ const laptopRecipientsSchema = new mongoose.Schema(
         phoneNumber: {
             type: Number,
         },
+        reasonForLaptop: {
+            type: String,
+        },
     },
     {
         timestamps: true
