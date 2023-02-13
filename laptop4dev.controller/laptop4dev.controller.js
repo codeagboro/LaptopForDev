@@ -14,9 +14,6 @@ exports.createRecipients = async (req, res) => {
         });
         }
 
-        const reasonLength = await recipientsRecord.findOne({reasonForLaptop});
-
-
         // email and phone number validation
         const emailExists = await recipientsRecord.findOne({emailAddress});
         const phoneNumberExists = await recipientsRecord.findOne({phoneNumber});
